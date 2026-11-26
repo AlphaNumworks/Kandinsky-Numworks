@@ -42,7 +42,7 @@ DEBUG = 'KANDINSKY_ENABLE_DEBUG' in os.environ #or True
 
 NO_GUI = 'KANDINSKY_NO_GUI' in os.environ
 
-# '0': PC, '1': Numworks, '2': Omega, '3': Upsilon
+# '0': PC, '1': Numworks, '2': Omega, '3': Upsilon, '4' Alpha
 mode = os.environ.get('KANDINSKY_OS_MODE')
 if mode and mode.isdecimal(): Vars.selected_os = int(mode) if 0 <= int(mode) < len(Config.os_list) else Config.default_os
 

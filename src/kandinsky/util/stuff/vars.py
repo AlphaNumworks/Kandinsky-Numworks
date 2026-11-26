@@ -44,6 +44,7 @@ class Config:
     {"name": "Numworks", "ratio": 1,   "heap": 65_536, "color": "#ffb531", "unit": "deg",     "clock": False, "battery": "battery0.png"},
     {"name": "Omega",    "ratio": 0.8, "heap": 99_000, "color": "#c53431", "unit": "sym/deg", "clock": True,  "battery": "battery0.png"},
     {"name": "Upsilon",  "ratio": 0.9, "heap": 69_500, "color": "#7ea2ce", "unit": "sym/deg", "clock": True,  "battery": "battery1.png"},
+    {"name": "Alpha",    "ratio": 0.9, "heap": 69_500, "color": "#00BB77", "unit": "sym/deg", "clock": True,  "battery": "battery1.png"}, # change heap and with the real heap
   )
   model_list = (
     {"name": "n0100", "ratio": 0, "disabled": True},
