@@ -11,7 +11,7 @@ try:
     os.environ['KANDINSKY_ZOOM_RATIO'] = '2'
 except: pass
 from math import cos,sin,pi
-from kandinsky import *
+import kandinsky
 from time import sleep
 from ion import *
 
@@ -53,11 +53,11 @@ def line(x1,y1,x2,y2,c):
   if abs(w)>=abs(h):
     d=h/w
     for i in range(0,w,(w>0)*2-1):
-      set_pixel(x1+i,y1+int(d*i+0.5),c)
+      kandinsky.set_pixel(x1+i,y1+int(d*i+0.5),c)
   else:
     d=w/h
     for i in range(0,h,(h>0)*2-1):
-      set_pixel(x1+int(d*i+0.5),y1+i,c)
+      kandinsky.set_pixel(x1+int(d*i+0.5),y1+i,c)
 
 def polygone(p,c):
     p = list(p)
@@ -76,18 +76,18 @@ def polygone(p,c):
       switches.sort()
       for x in range(0, len(switches), 2):
         if switches[x] >= 320*2: break
-        if switches[x+1] > 0: fill_rect(switches[x], y, switches[x+1]-switches[x], 1, c)
+        if switches[x+1] > 0: kandinsky.fill_rect(switches[x], y, switches[x+1]-switches[x], 1, c)
 
 try:
-  line=draw_line
-  string=draw_string
-except: string=lambda t,x,y,c,bg,f: draw_string(t,x,y,c,bg)
-try: polygone=fill_polygon
+  line=kandinsky.draw_line
+  string=kandinsky.draw_string
+except: string=lambda t,x,y,c,bg,f: kandinsky.draw_string(t,x,y,c,bg)
+try: polygone=kandinsky.fill_polygon
 except: pass
 
 # 3d to 2d render
 def render(cosx,sinx,cosy,siny,cosz,sinz):
-  fill_rect(0,0,320,200,"black")
+  kandinsky.fill_rect(0,0,320,200,"black")
   rended_poly = []
 
   for i in range(len(MODEL)):
@@ -138,7 +138,7 @@ cube3d(-100,-100,-100,100,100,100)
 
 xrot=yrot=zrot=xoffset=yoffset=0
 
-fill_rect(0,0,320,222,(0,)*3)
+kandinsky.fill_rect(0,0,320,222,(0,)*3)
 string("OK: fill on/off"+(' '*13)+"Arrows/+/-: move",5,207,"white","black",True)
 while True:
   xrot+=pi/90*(keydown(KEY_UP)-keydown(KEY_DOWN))
