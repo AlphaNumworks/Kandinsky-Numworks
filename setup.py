@@ -1,5 +1,4 @@
 import sys, os, shutil
-from setuptools import setup
 
 # Used by setup script to restore the version to 'null' in __init__.py after builded the library
 RESTORE_VERSION = "--version-null" in sys.argv
@@ -29,6 +28,8 @@ with open(PATH+"src/kandinsky/__init__.py", "wt", encoding="utf-8") as f: f.writ
 
 # Stop here if restore version to 'null'
 if RESTORE_VERSION: exit()
+
+from setuptools import setup
 
 # Remove __pycache__ everywhere
 def clean_pycache(path="."):
@@ -79,5 +80,11 @@ setup(
     'pyobjc-core ; sys_platform=="darwin"',
     'pyobjc-framework-Cocoa ; sys_platform=="darwin"',
   ], 
+  extras_require = {
+    'utilities': [
+      'ion-numworks>=2.0',
+      'win-precise-time>=1.4.2; sys_platform == "win32" and python_version >= "3.7"',
+    ],
+  },
   python_requires='>=3.6',
 )
