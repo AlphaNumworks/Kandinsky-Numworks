@@ -1,36 +1,72 @@
-# Just clean build files if '-c' argument is present
-[[ "$@" == *"-c"* ]] && JUST_CLEAN=true || JUST_CLEAN=false
+#!/bin/bash
 
-# Somes methods
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1
+
 ask() {
-  [[ "$1" == "" ]] && echo "ask: a question must be specified" && exit 1
-  [[ "$2" == "1" ]] && default="Y/n" || default="y/N"
+    local question="$1"
+    local default="${2:-n}"
+    local prompt="y/N"
+    local answer
 
-  echo -ne "$1? [$default]: "
-  read choise
-  [[ "$choise" == "y" ]] || [[ "$choise" == "yes" ]] || [[ "$choise" == "" && "$2" == "1" ]] && return 1 || return 0
+    if [[ "$default" == "y" ]]; then
+        prompt="Y/n"
+    fi
+
+    printf '%s? [%s]: ' "$question" "$prompt"
+    IFS= read -r answer || return 1
+
+    answer="${answer:-$default}"
+    [[ "${answer,,}" == "y" || "${answer,,}" == "yes" ]]
 }
 
 clean() {
-  echo "Cleaning build files ..."
-  rm -rf build src/kandinsky.egg-info
-  [[ -d "dist" && "$(ls -A dist)" ]] && ask "'dist' folder not empty, remove" || rm -rf dist 
+    printf 'Cleaning build files ...\n'
+    rm -rf -- build src/kandinsky.egg-info || return 1
+
+    if [[ -d dist && -n "$(ls -A -- dist)" ]]; then
+        if ! ask "'dist' folder is not empty, remove it"; then
+            return 0
+        fi
+    fi
+
+    rm -rf -- dist
 }
 
-# Remove previous build files
-clean
-$JUST_CLEAN && exit
-# Check and install build dependencies
-echo -e "\nInstalling build dependencies ..."
-pip3 install -U build
-# Build module
-echo -e "\nBuilding library ..."
-python3 -m build
-# Ask install
-ask "\nInstall library" || pip3 install .
-# Ask clear files
-ask "\nClear setup files" 1 || clean
-# Re-change library version to 'null'
-python3 setup.py --version-null
-# Finished
-echo "All done"
+if [[ $# -eq 1 && "$1" == "-c" ]]; then
+    clean
+    exit $?
+fi
+
+if [[ $# -ne 0 ]]; then
+    printf 'Usage: %s [-c]\n' "$0" >&2
+    exit 2
+fi
+
+clean || exit 1
+
+VENV_DIR=".venv"
+PYTHON="$VENV_DIR/bin/python"
+
+if [[ ! -x "$PYTHON" ]]; then
+    printf '\nCreating virtual environment ...\n'
+    python3 -m venv "$VENV_DIR" || exit 1
+fi
+
+printf '\nInstalling build dependencies ...\n'
+"$PYTHON" -m pip install -U build || exit 1
+
+printf '\nBuilding library ...\n'
+"$PYTHON" -m build || exit 1
+
+printf '\n'
+if ask "Install library"; then
+    "$PYTHON" -m pip install . || exit 1
+fi
+
+printf '\n'
+if ask "Clear setup files" y; then
+    clean || exit 1
+fi
+
+"$PYTHON" setup.py --version-null || exit 1
+printf 'All done\n'

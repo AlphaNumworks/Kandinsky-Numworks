@@ -1,5 +1,7 @@
-![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=ZetaMap.Kandinsky-Numworks) ![Downloads](https://shields.io/github/downloads/ZetaMap/Kandinsky-Numworks/total) ![pip](https://img.shields.io/pypi/dm/kandinsky?label=pip_downloads) ![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=clones&query=count&url=https://gist.githubusercontent.com/ZetaMap/d3a3bcef3e64ffa553c11c173a444a97/raw/clone.json&logo=github)
-# Kandinsky-Numworks
+![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=AlphaNumworks.Kandinsky-Alpha) ![Downloads](https://shields.io/github/downloads/AlphaNumworks/Kandinsky-Alpha/total) <!--![pip](https://img.shields.io/pypi/dm/kandinsky?label=pip_downloads) ![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=clones&query=count&url=https://gist.githubusercontent.com/ZetaMap/d3a3bcef3e64ffa553c11c173a444a97/raw/clone.json&logo=github)-->
+# Kandinsky-Alpha
+Kandinsky-Alpha is a fork of [Kandinsky-Numworks](https://github.com/ZetaMap/Kandinsky-Numworks), so some documentation may still be referring to the original project
+
 **This module depend to [PySDL2](https://pysdl2.readthedocs.io/en/latest/) module and sdl2 libraries, PySDL2 is just an [sdl2](https://www.libsdl.org/) wrapper with ctype and it just call methods in sdl2 library. To install both modules, click [here](https://github.com/ZetaMap/Kandinsky-Numworks/blob/pysdl2/FAQ.md#how-to-install-pysdl2) and follow steps.** <br>
 
 This module allowing to link the kandinsky module, from the Numworks, to a window. Useful if you want to test your program without putting it on the calculator. <br>
